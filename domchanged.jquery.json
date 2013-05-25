@@ -1,0 +1,20 @@
+{
+    "name"         : "DOMChanged",
+    "title"        : "jQuery DOMChanged event",
+    "description"  : "jQuery plugin for DOM change observer events.",
+    "keywords"     : ["DOM", "event"],
+    "version"      : "1.0.0",
+    "author"       : {
+        "name"     : "Jesse Proulx",
+        "email"    : "github@jproulx.net",
+        "url"      : "http://jproulx.net"
+    },
+    "licenses"     : [{ "type": "MIT", "url": "LICENSE" }],
+    "bugs"         : "https://github.com/jproulx/jquery-domchanged-plugin/issues",
+    "homepage"     : "https://github.com/jproulx/jquery-domchanged-plugin",
+    "docs"         : "https://github.com/jproulx/jquery-domchanged-plugin",
+    "download"     : "http://github.com/jproulx/jquery-domchanged-plugin/archive/master.zip",
+    "dependencies" : {
+        "jquery"   : ">=1.6"
+    }
+}
