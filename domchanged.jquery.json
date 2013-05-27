@@ -1,7 +1,7 @@
 {
     "name"         : "domchanged",
     "title"        : "jQuery DOMChanged event",
-    "description"  : "jQuery plugin for DOM change observer events.",
+    "description"  : "jQuery plugin for DOM change observer events",
     "keywords"     : ["DOM", "event"],
     "version"      : "1.0.0",
     "author"       : {
