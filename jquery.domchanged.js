@@ -28,20 +28,18 @@
         contexts[id] = contexts[id] || { };
         if (!contexts[id].later) {
             contexts[id].later = function () {
-                contexts[id].previous = new Date();
-                contexts[id].timeout  = null;
                 delete contexts[id];
                 return $element.trigger('DOMChanged');
             };
         }
-        var now       = new Date();
+        var now       = (new Date()).getTime();
         var previous  = contexts[id].previous || now;
         var remaining = 50 - (now - previous);
         var timeout   = contexts[id].timeout || null;
         if (remaining <= 0) {
-            clearTimeout(timeout);
-            timeout = null;
-            previous = now;
+            if (timeout) {
+                clearTimeout(timeout);
+            }
             delete contexts[id];
             return $element.trigger('DOMChanged');
         } else if (!timeout) {
@@ -68,23 +66,17 @@
             };
         }
     }
-    jQueryHook('append', function (element) {
-        return jQueryDOMChangedThrottle(element);
-    });
-    jQueryHook('appendTo', function () {
+    jQueryHook('prepend', function () {
         return jQueryDOMChangedThrottle(this);
     });
-    jQueryHook('before', function (element) {
-        return jQueryDOMChangedThrottle(element);
-    });
-    jQueryHook('after', function (element) {
-        return jQueryDOMChangedThrottle(element);
-    });
-    jQueryHook('insertBefore', function () {
+    jQueryHook('append', function () {
         return jQueryDOMChangedThrottle(this);
     });
-    jQueryHook('insertAfter', function () {
-        return jQueryDOMChangedThrottle(this);
+    jQueryHook('before', function () {
+        return jQueryDOMChangedThrottle($(this).parent());
+    });
+    jQueryHook('after', function () {
+        return jQueryDOMChangedThrottle($(this).parent());
     });
     jQueryHook('html', function () {
         return jQueryDOMChangedThrottle(this);
