@@ -1,5 +1,5 @@
 {
-    "name"         : "DOMChanged",
+    "name"         : "domchanged",
     "title"        : "jQuery DOMChanged event",
     "description"  : "jQuery plugin for DOM change observer events.",
     "keywords"     : ["DOM", "event"],
