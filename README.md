@@ -19,6 +19,6 @@ Caveats
 -------
 DOM modifications are detected by hooking into jQuery's native DOM manipulation APIs, not by observing the DOM directly. Support for mutation observers isn't widely available, and there are performance limits with mutation events.
 
-DOM change events are throttled within a 50 millisecond window per modified element. Throttling is determined by the element's DOM ID, and if no ID is available a unique ID will be generated on demand.
-
 DOM change events are written for single target jQuery selectors, not for group selectors.
+
+DOM change events can fire rapidly, you might want to throttle or debounce the events depending on your application's needs.

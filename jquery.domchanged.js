@@ -10,43 +10,14 @@
     }
 }(function ($) {
     'use strict';
-    var counter  = 0;
-    var contexts = { };
     /**
-     * Throttles the triggered DOM change events for specific elements
+     * Triggers the DOM changed event on the given element
      *
      * @private
      * @param   {Object}    element
      */
-    function jQueryDOMChangedThrottle (element) {
-        var $element = $(element);
-        var id       = $element.attr('id');
-        if (!id) {
-            id = 'jq-id-' + counter++;
-            $element.attr('id', id);
-        }
-        contexts[id] = contexts[id] || { };
-        if (!contexts[id].later) {
-            contexts[id].later = function () {
-                delete contexts[id];
-                return $element.trigger('DOMChanged');
-            };
-        }
-        var now       = (new Date()).getTime();
-        var previous  = contexts[id].previous || now;
-        var remaining = 50 - (now - previous);
-        var timeout   = contexts[id].timeout || null;
-        if (remaining <= 0) {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-            delete contexts[id];
-            return $element.trigger('DOMChanged');
-        } else if (!timeout) {
-            timeout = setTimeout(contexts[id].later, remaining);
-        }
-        contexts[id].previous = previous;
-        contexts[id].timeout = timeout;
+    function jQueryDOMChanged (element, type) {
+        return $(element).trigger('DOMChanged', type);
     }
     /**
      * Wraps a given jQuery method and injects another function to be called
@@ -67,18 +38,23 @@
         }
     }
     jQueryHook('prepend', function () {
-        return jQueryDOMChangedThrottle(this);
+        return jQueryDOMChanged(this, 'prepend');
     });
     jQueryHook('append', function () {
-        return jQueryDOMChangedThrottle(this);
+        return jQueryDOMChanged(this, 'append');
     });
     jQueryHook('before', function () {
-        return jQueryDOMChangedThrottle($(this).parent());
+        return jQueryDOMChanged($(this).parent(), 'before');
     });
     jQueryHook('after', function () {
-        return jQueryDOMChangedThrottle($(this).parent());
+        return jQueryDOMChanged($(this).parent(), 'after');
     });
-    jQueryHook('html', function () {
-        return jQueryDOMChangedThrottle(this);
+    jQueryHook('html', function (value) {
+        // Internally jQuery will set strings using innerHTML
+        // otherwise will use append to insert new elements
+        // Only trigger on string types to avoid doubled events
+        if (typeof value === 'string') {
+            return jQueryDOMChanged(this, 'html');
+        }
     });
 }));
