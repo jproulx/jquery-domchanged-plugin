@@ -14,7 +14,8 @@
      * Triggers the DOM changed event on the given element
      *
      * @private
-     * @param   {Object}    element
+     * @param   {Object}    element     the jQuery element that has been modified
+     * @param   {String}    type        jQuery method used to trigger manipulation
      */
     function jQueryDOMChanged (element, type) {
         return $(element).trigger('DOMChanged', type);
