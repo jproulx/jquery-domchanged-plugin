@@ -33,15 +33,11 @@
         });
         asyncTest('multiple events caught', 3, function () {
             var $fixture = $('#qunit-fixture');
-            var other = document.createElement('div');
-            other.id = 'test2';
-            document.getElementById('qunit-fixture').appendChild(other);
-            //$fixture.html('<div id="test2"></div>');
+            $fixture.html('<div id="test2"></div>');
             var $body = $('body');
             var counter = 0;
             $body.on('DOMChanged', function (event, type) {
                 counter += 1;
-                console.log(event.target, type);
                 ok(true, 'Observed ' + counter);
                 if (counter == 3) {
                     setTimeout(function () {
@@ -82,24 +78,13 @@
     createModule('after',        '#test2',          '<div>Test</div>');
     createModule('insertAfter',  '<div>Test</div>', '#test2'         );
     createModule('html',         '#qunit-fixture',  '<div>Test</div>');
-    asyncTest('empty call does not trigger', 0, function () {
+    test('empty call does not trigger', 1, function () {
         var $fixture = $('#qunit-fixture');
-        var counter  = 0;
-        var done     = function () {
-            counter += 1;
-            if (counter === 2) {
-                start();
-            }
-        };
         $fixture.on('DOMChanged', function (event) {
             ok(false, 'DOMchanged event fired inappropriately');
             $fixture.off('DOMChanged');
-            done();
         });
         $fixture.html();
-        done();
-        setTimeout(function () {
-            done();
-        }, 500);
+        ok(true, 'DOMChanged event not fired');
     });
 }(jQuery));
