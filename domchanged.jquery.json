@@ -3,7 +3,7 @@
     "title"        : "jQuery DOMChanged event",
     "description"  : "jQuery plugin for DOM change observer events",
     "keywords"     : ["DOM", "event"],
-    "version"      : "1.1.0",
+    "version"      : "1.2.0",
     "author"       : {
         "name"     : "Jesse Proulx",
         "email"    : "github@jproulx.net",
